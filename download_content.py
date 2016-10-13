@@ -13,13 +13,12 @@ gauth = GoogleAuth()
 gauth.credentials = credentials
 drive = GoogleDrive(gauth)
 
-# query = "mimeType = 'application/vnd.google-apps.folder'"
 query = "title = 'Shipping Label Inbox'"
 directory = drive.ListFile({'q': query}).GetList()[0]
 dir_id = directory['id']
 
 query = "'{}' in parents".format(dir_id)
 file_list = drive.ListFile({'q': query}).GetList()
-print('{} files in directory'.format(len(file_list)))
-for fil in file_list:
-  print('title: {}, id: {}'.format(fil['title'], fil['id']))
+for i, fil in enumerate(file_list):
+    filename = 'temp-{}.pdf'.format(i)
+    fil.GetContentFile(filename)
