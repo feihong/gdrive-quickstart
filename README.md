@@ -8,3 +8,9 @@ Using OAuth 2.0 for Server to Server Applications: https://developers.google.com
 
 Python Quickstart: https://developers.google.com/drive/v3/web/quickstart/python
 
+## Installation
+
+```
+mkvirtualenv -p python3 gdrive
+pip install -r requirements.txt
+```
