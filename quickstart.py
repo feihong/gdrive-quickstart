@@ -8,15 +8,18 @@ scopes = ['https://www.googleapis.com/auth/drive.readonly']
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     'service_account_credentials.json', scopes)
 credentials.authorize(httplib2.Http())
-print(credentials)
-
 
 gauth = GoogleAuth()
 gauth.credentials = credentials
-
 drive = GoogleDrive(gauth)
 
-query = "mimeType = 'application/vnd.google-apps.folder'"
+# query = "mimeType = 'application/vnd.google-apps.folder'"
+query = "title = 'Shipping Label Inbox'"
+directory = drive.ListFile({'q': query}).GetList()[0]
+dir_id = directory['id']
+
+query = "'{}' in parents".format(dir_id)
 file_list = drive.ListFile({'q': query}).GetList()
-for file1 in file_list:
-  print('title: %s, id: %s' % (file1['title'], file1['id']))
+print('{} files in directory'.format(len(file_list)))
+for fil in file_list:
+  print('title: {}, id: {}'.format(fil['title'], fil['id']))
